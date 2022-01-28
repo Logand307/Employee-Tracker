@@ -41,11 +41,35 @@ let employeeTracker = () => {
 };
 
 let viewAllDepartments = () => {
-    let sql =
-        `SELECT * from department`;
+    const sql = `SELECT * FROM department;`;
+
     db.query(sql, (error, response) => {
         if (error) throw error;
-        console.log("error");
+        console.table(response);
+        employeeTracker();
+    })
+}
+
+let viewAllRoles = () => {
+    const sql = `SELECT role.id, role.title, role.salary, department.department_name AS department 
+    FROM role
+    INNER JOIN department ON role.department_id = department.id`;
+
+    db.query(sql, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        employeeTracker();
+    })
+}
+
+let viewAllEmployees = () => {
+    const sql = `SELECT * FROM employee;`;
+
+
+    db.query(sql, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        employeeTracker();
     })
 }
 

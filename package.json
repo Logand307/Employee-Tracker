@@ -4,8 +4,7 @@
     "inquirer": "^8.2.0",
     "mysql2": "^2.3.3"
   },
-    "scripts": {
-      "start": "node index.js"
-    }
-  
+  "scripts": {
+    "start": "node index.js"
+  }
 }
