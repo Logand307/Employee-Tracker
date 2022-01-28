@@ -1,17 +1,18 @@
 const inquirer = require("inquirer");
-// const cTable = require('console.table');
+const cTable = require('console.table');
+const db = require('./config/connection');
 
 
-var employeeTracker = () => {
+let employeeTracker = () => {
     return inquirer
         .prompt([
             {
                 type: "list",
-                name: "toDo",
+                name: "options",
                 message: "What would you like to do?",
                 choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update employee role"],
             }]).then(userChoice => {
-                switch (userChoice.toDo) {
+                switch (userChoice.options) {
                     case "View all departments":
                         viewAllDepartments();
                         break;
@@ -34,9 +35,18 @@ var employeeTracker = () => {
                         updateEmployeeRole();
                         break;
                     default:
-                    
+
                 };
             })
 };
+
+let viewAllDepartments = () => {
+    let sql =
+        `SELECT * from department`;
+    db.query(sql, (error, response) => {
+        if (error) throw error;
+        console.log("error");
+    })
+}
 
 employeeTracker();
