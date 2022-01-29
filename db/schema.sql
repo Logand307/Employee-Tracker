@@ -7,11 +7,13 @@ CREATE TABLE department (
     department_name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
-    salary DECIMAL(10, 2) NOT NULL,
-    department_id INTEGER
+    employee_salary DECIMAL(10, 2) NOT NULL,
+    department_id INTEGER,
+    FOREIGN KEY (department_id)
+    REFERENCES department(id)
 );
 
 CREATE TABLE employee (
@@ -20,6 +22,6 @@ CREATE TABLE employee (
     last_name VARCHAR(30) NOT NULL,
     job_title VARCHAR(30) NOT NULL,
     manager_name VARCHAR(30) NOT NULL,
-    department_name VARCHAR(30) NOT NULL,
-    employee_salary INTEGER
+    department_name VARCHAR(30),
+    salary INTEGER
 );
