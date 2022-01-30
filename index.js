@@ -162,4 +162,52 @@ let addEmployee = () => {
         });
 };
 
+let updateEmployeeRole = () => {
+
+    const sql = `SELECT * FROM employee;`;
+    const getRole = `SELECT * FROM roles;`;
+
+
+    db.query(sql, (error, response) => {
+        if (error) throw error;
+        db.query(getRole, (error, role) => {
+            if (error) throw error;
+            response = response.map(function (employee) {
+                return {
+                    name: (`${employee.first_name}, ${employee.last_name}`),
+                    value: employee.id
+                }
+            })
+            role = role.map(function (roles) {
+                return {
+                    name: roles.title,
+                    value: roles.title
+                }
+            })
+            inquirer
+                .prompt([
+                    {
+                        name: 'employeeUpdate',
+                        type: 'list',
+                        message: 'What employee do you want to update?',
+                        choices: response
+                    },
+                    {
+                        name: 'roleUpdate',
+                        type: 'list',
+                        message: 'What do you want to update the role to?',
+                        choices: role
+                    }
+                ]).then(function (answers) {
+                    const updateRole = `UPDATE employee SET job_title = ? WHERE id = ?;`;
+                    db.query(updateRole, [answers.roleUpdate, answers.employeeUpdate], (error) => {
+                        if (error) throw error;
+                        viewAllEmployees();
+                    })
+                })
+        })
+    })
+
+};
+
 employeeTracker();
